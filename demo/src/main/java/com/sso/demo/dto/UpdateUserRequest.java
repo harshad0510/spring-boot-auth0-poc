@@ -1,0 +1,38 @@
+package com.sso.demo.dto;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class UpdateUserRequest {
+    @JsonProperty("connection")
+    private String connection;
+
+    @JsonProperty("name")
+    private String name;
+
+    @JsonProperty("family_name")
+    private String familyName;
+
+    public String getConnection() {
+        return connection;
+    }
+
+    public void setConnection(String connection) {
+        this.connection = connection;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getFamilyName() {
+        return familyName;
+    }
+
+    public void setFamilyName(String familyName) {
+        this.familyName = familyName;
+    }
+}
