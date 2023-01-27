@@ -2,7 +2,7 @@ package com.sso.demo.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class GetUserDetailRequestDTO {
+public class UserIdRequestDTO {
 
     @JsonProperty("id")
     private String id;

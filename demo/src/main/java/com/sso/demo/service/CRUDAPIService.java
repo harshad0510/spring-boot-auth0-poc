@@ -1,7 +1,7 @@
 package com.sso.demo.service;
 
 import com.sso.demo.dto.CreateUserRequestDTO;
-import com.sso.demo.dto.GetUserDetailRequestDTO;
+import com.sso.demo.dto.UserIdRequestDTO;
 import com.sso.demo.dto.ManagementAPITokenRequestDTO;
 import com.sso.demo.dto.ManagementAPITokenResponseDTO;
 import com.sso.demo.dto.UpdateUserRequest;
@@ -17,8 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.net.http.HttpClient;
 
 @Service
 public class CRUDAPIService {
@@ -70,7 +68,7 @@ public class CRUDAPIService {
         return response.getBody();
     }
 
-    public String getUser(GetUserDetailRequestDTO getUserDetailRequestDTO) {
+    public String getUser(UserIdRequestDTO userIdRequestDTO) {
         String accessToken = getManagementAPIToken();
 
         HttpHeaders headers = new HttpHeaders();
@@ -79,7 +77,7 @@ public class CRUDAPIService {
         HttpEntity<Void> entity = new HttpEntity<>(headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        String url = urlHost + "api/v2/users/" + getUserDetailRequestDTO.getId();
+        String url = urlHost + "api/v2/users/" + userIdRequestDTO.getId();
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
         return response.getBody();
     }
@@ -97,6 +95,20 @@ public class CRUDAPIService {
         restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory(client));
         String url = urlHost + "api/v2/users/" + updateUserRequestDTO.getId();
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PATCH, entity, String.class);
+        return response.getBody();
+    }
+
+    public String deleteUser(UserIdRequestDTO userIdRequestDTO) {
+        String accessToken = getManagementAPIToken();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Bearer " + accessToken);
+        HttpEntity<Void> entity = new HttpEntity<>(headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        String url = urlHost + "api/v2/users/" + userIdRequestDTO.getId();
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.DELETE, entity, String.class);
         return response.getBody();
     }
 }
