@@ -1,8 +1,8 @@
 package com.sso.demo.rest;
 
 import com.sso.demo.dto.CreateUserRequestDTO;
-import com.sso.demo.dto.UserIdRequestDTO;
 import com.sso.demo.dto.UpdateUserRequestDTO;
+import com.sso.demo.dto.UserIdRequestDTO;
 import com.sso.demo.service.CRUDAPIService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

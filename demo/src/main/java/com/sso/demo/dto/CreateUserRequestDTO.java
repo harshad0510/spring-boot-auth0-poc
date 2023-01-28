@@ -22,6 +22,9 @@ public class CreateUserRequestDTO {
     @JsonProperty("email_verified")
     private boolean emailVerified;
 
+    @JsonProperty("user_metadata")
+    private Object userMetadata;
+
     public String getEmail() {
         return email;
     }
@@ -70,4 +73,11 @@ public class CreateUserRequestDTO {
         this.emailVerified = emailVerified;
     }
 
+    public Object getUserMetadata() {
+        return userMetadata;
+    }
+
+    public void setUserMetadata(Object userMetadata) {
+        this.userMetadata = userMetadata;
+    }
 }

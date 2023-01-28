@@ -1,11 +1,11 @@
 package com.sso.demo.service;
 
 import com.sso.demo.dto.CreateUserRequestDTO;
-import com.sso.demo.dto.UserIdRequestDTO;
 import com.sso.demo.dto.ManagementAPITokenRequestDTO;
 import com.sso.demo.dto.ManagementAPITokenResponseDTO;
 import com.sso.demo.dto.UpdateUserRequest;
 import com.sso.demo.dto.UpdateUserRequestDTO;
+import com.sso.demo.dto.UserIdRequestDTO;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Value;
