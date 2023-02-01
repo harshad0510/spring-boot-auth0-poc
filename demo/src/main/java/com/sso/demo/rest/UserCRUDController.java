@@ -1,6 +1,7 @@
 package com.sso.demo.rest;
 
 import com.sso.demo.dto.CreateUserRequestDTO;
+import com.sso.demo.dto.PasswordChangeUrlRequestDTO;
 import com.sso.demo.dto.UpdateUserRequestDTO;
 import com.sso.demo.dto.UserIdRequestDTO;
 import com.sso.demo.service.CRUDAPIService;
@@ -30,7 +31,7 @@ public class UserCRUDController {
     }
 
     @PostMapping(value = "/test/get-user", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public String createUser(@RequestBody UserIdRequestDTO userIdRequestDTO) {
+    public String getUser(@RequestBody UserIdRequestDTO userIdRequestDTO) {
         return crudapiService.getUser(userIdRequestDTO);
     }
 
@@ -43,5 +44,16 @@ public class UserCRUDController {
     public String deleteUser(@RequestBody UserIdRequestDTO userIdRequestDTO) {
         return crudapiService.deleteUser(userIdRequestDTO);
     }
+
+    @PostMapping(value = "/test/password-change-url", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public String getPasswordChangeUrl(@RequestBody Object request) {
+        return crudapiService.getPasswordChangeUrl(request);
+    }
+
+    @PostMapping(value = "/test/send-password-change-email", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public String sendPasswordChangeEmail(@RequestBody Object request) {
+        return crudapiService.sendPasswordResetEmail(request);
+    }
+
 
 }

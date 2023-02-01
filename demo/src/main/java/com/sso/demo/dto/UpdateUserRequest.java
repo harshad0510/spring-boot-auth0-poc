@@ -1,5 +1,6 @@
 package com.sso.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UpdateUserRequest {
@@ -11,6 +12,10 @@ public class UpdateUserRequest {
 
     @JsonProperty("family_name")
     private String familyName;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonProperty("app_metadata")
+    private Object appMetadata;
 
     public String getConnection() {
         return connection;
@@ -34,5 +39,13 @@ public class UpdateUserRequest {
 
     public void setFamilyName(String familyName) {
         this.familyName = familyName;
+    }
+
+    public Object getAppMetadata() {
+        return appMetadata;
+    }
+
+    public void setAppMetadata(Object appMetadata) {
+        this.appMetadata = appMetadata;
     }
 }

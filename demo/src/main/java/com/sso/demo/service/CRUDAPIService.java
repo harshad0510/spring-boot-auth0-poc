@@ -3,6 +3,7 @@ package com.sso.demo.service;
 import com.sso.demo.dto.CreateUserRequestDTO;
 import com.sso.demo.dto.ManagementAPITokenRequestDTO;
 import com.sso.demo.dto.ManagementAPITokenResponseDTO;
+import com.sso.demo.dto.PasswordChangeUrlRequestDTO;
 import com.sso.demo.dto.UpdateUserRequest;
 import com.sso.demo.dto.UpdateUserRequestDTO;
 import com.sso.demo.dto.UserIdRequestDTO;
@@ -109,6 +110,37 @@ public class CRUDAPIService {
         RestTemplate restTemplate = new RestTemplate();
         String url = urlHost + "api/v2/users/" + userIdRequestDTO.getId();
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.DELETE, entity, String.class);
+        return response.getBody();
+    }
+
+    public String getPasswordChangeUrl(Object request) {
+        // in the request we can pass client_id or result_url
+        // client_id will be useful for new universal login
+        // if we set result_url then after reset password, it will redirect to that url
+        // result_url is not working currently for new universal login approach
+
+        String accessToken = getManagementAPIToken();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Bearer " + accessToken);
+        HttpEntity<Object> entity = new HttpEntity<>(request, headers);
+        RestTemplate restTemplate = new RestTemplate();
+        String url = urlHost + "api/v2/tickets/password-change";
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        return response.getBody();
+    }
+
+    public String sendPasswordResetEmail(Object request) {
+        String accessToken = getManagementAPIToken();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Bearer " + accessToken);
+        HttpEntity<Object> entity = new HttpEntity<>(request, headers);
+        RestTemplate restTemplate = new RestTemplate();
+        String url = urlHost + "dbconnections/change_password";
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
         return response.getBody();
     }
 }

@@ -21,7 +21,7 @@ public class MessageController {
     }
 
     @GetMapping(value = "/protected", produces = {MediaType.APPLICATION_JSON_VALUE})
-    @PreAuthorize("hasAuthority('read:admin-messages')")
+    @PreAuthorize("hasAuthority('admin')")
     public String getProtected() {
         return messageService.getProtectedMessage();
     }
