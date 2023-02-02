@@ -7,6 +7,9 @@ public class CreateUserRequestDTO {
     @JsonProperty("email")
     private String email;
 
+    @JsonProperty("username")
+    private String username;
+
     @JsonProperty("password")
     private String password;
 
@@ -79,5 +82,13 @@ public class CreateUserRequestDTO {
 
     public void setUserMetadata(Object userMetadata) {
         this.userMetadata = userMetadata;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

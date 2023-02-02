@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -55,5 +56,10 @@ public class UserCRUDController {
         return crudapiService.sendPasswordResetEmail(request);
     }
 
+    @GetMapping(value = "/test/verify-jwt", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public String verifyJwtToken(@RequestHeader("Authorization") String token) {
+        crudapiService.verifyJwt(token.substring(7));
+        return "Done";
+    }
 
 }

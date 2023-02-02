@@ -1,9 +1,18 @@
 package com.sso.demo.service;
 
+import com.auth0.jwk.JwkException;
+import com.auth0.jwk.JwkProvider;
+import com.auth0.jwk.UrlJwkProvider;
+import com.auth0.jwt.JWT;
+import com.auth0.jwk.Jwk;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.Claim;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.auth0.jwt.interfaces.JWTVerifier;
 import com.sso.demo.dto.CreateUserRequestDTO;
 import com.sso.demo.dto.ManagementAPITokenRequestDTO;
 import com.sso.demo.dto.ManagementAPITokenResponseDTO;
-import com.sso.demo.dto.PasswordChangeUrlRequestDTO;
 import com.sso.demo.dto.UpdateUserRequest;
 import com.sso.demo.dto.UpdateUserRequestDTO;
 import com.sso.demo.dto.UserIdRequestDTO;
@@ -18,6 +27,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.security.interfaces.RSAPublicKey;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class CRUDAPIService {
@@ -142,5 +155,35 @@ public class CRUDAPIService {
         String url = urlHost + "dbconnections/change_password";
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
         return response.getBody();
+    }
+
+    public void verifyJwt(String authorizationToken) {
+        String token = authorizationToken;
+        JwkProvider provider = new UrlJwkProvider(urlHost);
+        try {
+            DecodedJWT jwt = JWT.decode(token);
+            // Get the kid from received JWT token
+            Jwk jwk = provider.get(jwt.getKeyId());
+
+
+            Algorithm algorithm = Algorithm.RSA256((RSAPublicKey) jwk.getPublicKey(), null);
+
+
+            JWTVerifier verifier = JWT.require(algorithm)
+                    .withIssuer(urlHost)
+                    .build();
+
+            jwt = verifier.verify(token);
+            Map<String, Claim> map = jwt.getClaims();
+            Claim permission = map.get("permissions");
+            List<String> k = permission.asList(String.class);
+            String s = k.get(0);
+        } catch (JWTVerificationException e){
+            //Invalid signature/claims
+            e.printStackTrace();
+        } catch (JwkException e) {
+            // invalid JWT token
+            e.printStackTrace();
+        }
     }
 }
