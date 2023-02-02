@@ -31,7 +31,6 @@ export const Auth0ProviderWithHistory = ({ children }) => {
       onRedirectCallback={onRedirectCallback}
       audience={audience}
       useRefreshTokens={true}
-      cacheLocation="localstorage"
     >
       {children}
     </Auth0Provider>

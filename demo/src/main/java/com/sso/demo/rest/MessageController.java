@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,8 +23,8 @@ public class MessageController {
 
     @GetMapping(value = "/protected", produces = {MediaType.APPLICATION_JSON_VALUE})
     @PreAuthorize("hasAuthority('admin')")
-    public String getProtected() {
-        return messageService.getProtectedMessage();
+    public String getProtected(@RequestHeader("Authorization") String token) {
+        return messageService.getProtectedMessage(token);
     }
 
 }
