@@ -15,15 +15,7 @@ public class MessageService {
         return "Public message";
     }
 
-    public String getProtectedMessage(String authorizationHeader) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", authorizationHeader);
-        HttpEntity<Void> entity = new HttpEntity<>(headers);
-
-        RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:8090/test/verify-jwt";
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-        return response.getBody();
+    public String getProtectedMessage() {
+        return "protected response";
     }
 }

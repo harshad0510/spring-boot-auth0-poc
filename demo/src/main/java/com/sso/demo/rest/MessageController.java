@@ -23,8 +23,8 @@ public class MessageController {
 
     @GetMapping(value = "/protected", produces = {MediaType.APPLICATION_JSON_VALUE})
     @PreAuthorize("hasAuthority('admin')")
-    public String getProtected(@RequestHeader("Authorization") String token) {
-        return messageService.getProtectedMessage(token);
+    public String getProtected() {
+        return messageService.getProtectedMessage();
     }
 
 }
